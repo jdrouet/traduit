@@ -1,23 +1,14 @@
-const question = require('./lib/question');
-const fs = require('fs-extra');
-const _ = require('lodash');
+#!/usr/bin/env node
 
-const processFile = function(filename, key, value) {
-  return new Promise(function(resolve, reject) {
-    fs.readJson(filename, function(err, res) {
-      if (err) return reject(err);
-      const output = _.merge({[key]: value}, res);
-      fs.writeJson(filename, output, function(err) {
-        if (err) return reject(err);
-        return resolve();
-      });
-    });
-  });
-};
+const question = require('./lib/question');
+const processFile = require('./lib/process');
+const _ = require('lodash');
 
 question(process.argv.slice(2))
   .then(function(res) {
     return Promise.all(_.map(res.values, function(value, key) {
+      console.log(key, res.key, value);
       return processFile(key, res.key, value);
     }));
-  });
+  })
+  .catch(err => console.error(err));
