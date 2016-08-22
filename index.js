@@ -1,14 +1,19 @@
 #!/usr/bin/env node
 
-const question = require('./lib/question');
-const processFile = require('./lib/process');
-const _ = require('lodash');
+const commander = require('commander');
+const run = require('./lib');
 
-question(process.argv.slice(2))
-  .then(function(res) {
-    return Promise.all(_.map(res.values, function(value, key) {
-      console.log(key, res.key, value);
-      return processFile(key, res.key, value);
-    }));
-  })
+commander
+  .version('1.0.0')
+  .usage('[options] <file ...>')
+  .option('-d, --delete', 'Delete the entry key from the files')
+  .parse(process.argv);
+
+const options = {
+  delete: commander.delete,
+  sync: commander.sync,
+  files: commander.args
+};
+
+run(options)
   .catch(err => console.error(err));

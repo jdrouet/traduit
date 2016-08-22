@@ -1,0 +1,18 @@
+machine:
+  node:
+    version: 6.4.0
+
+dependencies:
+  pre:
+    - npm install
+    - npm install -g codecov
+
+  cache_directories:
+    - node_modules
+
+test:
+  override:
+    - npm test
+  post:
+    - npm run coverage
+    - codecov
