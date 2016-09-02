@@ -15,9 +15,20 @@ Installation
 npm install -g traduit
 ```
 
-Usage
------
+Adding a key to your translations
+---------------------------------
 
 ```bash
 traduit /the/path/to/my/translations/*
 ```
+
+![Adding translation](documentation/append.gif)
+
+Deleting a key to your translations
+-----------------------------------
+
+```bash
+traduit -d /the/path/to/my/translations/*
+```
+
+![Deleting translation](documentation/delete.gif)
